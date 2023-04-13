@@ -1,3 +1,4 @@
+
 const net = require("net");
 // establishes a connection with the game server
 const connect = function () {
@@ -5,13 +6,18 @@ const connect = function () {
     host: '165.227.47.243',
     port: '50541'
   });
+
   // interpret incoming data as text
   conn.setEncoding("utf8");
-  conn.on('connect', () => {
-   // code occur when the connection is first established
-  console.log("Player is connected to the server");
- });
-  
+  conn.on('data', (data) => {
+   console.log('Player has connected with server!');
+   console.log('Server says:', data);
+  })
+  conn.on('connect',() => {
+    conn.write("Name: AGP");
+})
+
+
   return conn;
 };
 
@@ -19,8 +25,6 @@ console.log("Connecting ...");
 connect();
 
 module.exports = connect;
-
-
 
 
 
@@ -44,6 +48,8 @@ module.exports = connect;
 //          keyboard.startKeyboard(client, name);
 // initial hello the server
 //          client.write(`${name}: Hello there!`);
+
+
 // // The server credentials are:
 // Web view: http://165.227.47.243:8081/
 //  ^--- go here on your browser
